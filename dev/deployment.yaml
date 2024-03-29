@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp-argo
+  namespace: myapp
 spec:
   selector:
     matchLabels:
@@ -24,3 +25,10 @@ spec:
           limits:
             memory: "778Mi"  
             cpu: "500m"
+        volumeMounts:
+          - name: myapp-volume
+            mountPath: /data
+      volumes:
+        - name: myapp-volume
+          persistentVolumeClaim:
+            claimName: myapp-pvc
